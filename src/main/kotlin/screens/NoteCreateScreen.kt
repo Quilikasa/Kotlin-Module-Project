@@ -1,3 +1,5 @@
+package screens
+
 class NoteCreateScreen {
     //название экрана - общее?
 

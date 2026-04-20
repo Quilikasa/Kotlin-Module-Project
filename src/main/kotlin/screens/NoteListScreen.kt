@@ -1,3 +1,7 @@
+package screens
+
+import NavigationAction
+import data.Note
 import java.util.Scanner
 
 /**
@@ -6,12 +10,12 @@ import java.util.Scanner
  * Отображает название экрана
  * Принимает на вход список заметок
  * Отрисовывает список заметок и меню
- * Обрабатывает пользовательский ввод (на вход так же принимает сканер)
+ * Обрабатывает пользовательский ввод (для этого на вход так же принимает сканер)
  *
- * Умеет обрабатывать 3 действия и выбрасывает соответствующие колбэки:
- * 1) выбор заметки onShowElement()
- * 2) создание новой заметки onCreateElement()
- * 3) выход с экрана onExit()
+ * Умеет обрабатывать 3 действия и выбрасывает колбэк с соответствующим NavigationAction:
+ * 1) выбор заметки NavigationAction.OpenNote
+ * 2) создание новой заметки NavigationAction.CreateNote
+ * 3) выход NavigationAction.Back
  *
  */
 class NoteListScreen(val scanner: Scanner, val notes: MutableList<Note>) : Screen() {
@@ -47,9 +51,9 @@ class NoteListScreen(val scanner: Scanner, val notes: MutableList<Note>) : Scree
                     break
                 }
                 else -> {
-                    onNavigate(NavigationAction.OpenNote(input))
+                    onNavigate(NavigationAction.OpenNote(notes[input.toInt()-1]))
                     break
-                    //обработать негативные сценарии
+                    //TODO обработать негативные сценарии
                 }
             }
         }

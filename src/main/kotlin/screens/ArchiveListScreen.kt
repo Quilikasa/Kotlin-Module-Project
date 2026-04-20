@@ -1,17 +1,21 @@
+package screens
+
+import NavigationAction
+import data.Archive
 import java.util.Scanner
 
 /**
- * Экран списка архивов
+ * Экран списка архивов - стартовый
  *
  * Отображает название экрана
  * Принимает на вход список архивов
  * Отрисовывает список архивов и меню
- * Обрабатывает пользовательский ввод (на вход так же принимает сканер)
+ * Обрабатывает пользовательский ввод (для этого на вход так же принимает сканер)
  *
- * Умеет обрабатывать 3 действия и выбрасывает соответствующие колбэки:
- * 1) выбор архива onShowElement()
- * 2) создание нового архива onCreateElement()
- * 3) выход с экрана onExit()
+ * Умеет обрабатывать 3 действия и выбрасывает колбэк с соответствующим NavigationAction:
+ * 1) выбор архива NavigationAction.OpenArchive
+ * 2) создание нового архива NavigationAction.CreateArchive
+ * 3) выход NavigationAction.Exit
  *
  */
 class ArchiveListScreen(val scanner: Scanner, val archives: MutableList<Archive>): Screen() {
@@ -47,9 +51,9 @@ class ArchiveListScreen(val scanner: Scanner, val archives: MutableList<Archive>
                     break
                 }
                 else -> {
-                    onNavigate(NavigationAction.OpenArchive(input))
+                    onNavigate(NavigationAction.OpenArchive(input.toInt()-1))
                     break
-                    //обработать негативные сценарии
+                    //TODO обработать негативные сценарии
                 }
             }
         }

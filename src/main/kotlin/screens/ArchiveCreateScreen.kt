@@ -1,3 +1,5 @@
+package screens
+
 class ArchiveCreateScreen {
     //название экрана - общее?
 
