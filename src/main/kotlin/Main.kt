@@ -1,10 +1,13 @@
 import data.Archive
 import data.Note
+import screens.ArchiveCreateScreen
 import screens.ArchiveListScreen
+import screens.NoteCreateScreen
 import screens.NoteListScreen
 import screens.NoteViewScreen
 import screens.Screen
 import java.util.Scanner
+import kotlin.system.exitProcess
 
 fun main(args: Array<String>) {
     //инициализация сканера
@@ -35,17 +38,30 @@ fun main(args: Array<String>) {
                 when(currentScreen) {
                     is NoteListScreen -> ArchiveListScreen(scanner, archives)
                     is NoteViewScreen -> NoteListScreen(scanner, archives[currentArchive].notes)
+                    is ArchiveCreateScreen -> ArchiveListScreen(scanner, archives)
+                    is NoteCreateScreen -> NoteListScreen(scanner, archives[currentArchive].notes)
                     else -> ArchiveListScreen(scanner, archives)
                 }
             }
-            is NavigationAction.Exit -> return
-            is NavigationAction.CreateArchive -> TODO()
+            is NavigationAction.Exit -> {
+                scanner.close()
+                exitProcess(0)
+            }
+            is NavigationAction.CreateArchive -> ArchiveCreateScreen(scanner)
             is NavigationAction.OpenArchive -> {
                 currentArchive = action.archiveIndex
                 NoteListScreen(scanner, archives[currentArchive].notes)
             }
-            is NavigationAction.CreateNote -> TODO()
+            is NavigationAction.CreateNote -> NoteCreateScreen(scanner)
             is NavigationAction.OpenNote -> NoteViewScreen(scanner, action.note)
+            is NavigationAction.SaveArchiveAndBack -> {
+                archives.add(action.archive)
+                ArchiveListScreen(scanner, archives)
+            }
+            is NavigationAction.SaveNoteAndBack -> {
+                archives[currentArchive].notes.add(action.note)
+                NoteListScreen(scanner, archives[currentArchive].notes)
+            }
         }
 
         currentScreen.start(::navigateTo)

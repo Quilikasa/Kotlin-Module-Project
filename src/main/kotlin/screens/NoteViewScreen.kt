@@ -26,7 +26,7 @@ class NoteViewScreen(val scanner: Scanner, val note: Note) : Screen() {
     private fun showMenu() {
         println("Заметка: ${note.name}")
         println(note.text)
-        println("Для выхода введите любой символ")
+        println("Для выхода введите 0")
     }
 
     private fun readUserInput(onNavigate: (NavigationAction) -> Unit) {

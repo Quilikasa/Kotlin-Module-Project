@@ -1,3 +1,4 @@
+import data.Archive
 import data.Note
 
 sealed class NavigationAction {
@@ -7,4 +8,6 @@ sealed class NavigationAction {
     object CreateArchive : NavigationAction()
     data class OpenNote(val note: Note) : NavigationAction()
     object CreateNote : NavigationAction()
+    data class SaveNoteAndBack(val note: Note) : NavigationAction()
+    data class SaveArchiveAndBack(val archive: Archive) : NavigationAction()
 }
