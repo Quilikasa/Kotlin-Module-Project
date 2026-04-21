@@ -24,12 +24,12 @@ class NoteCreateScreen() : Screen() {
     }
 
     private fun showMenu() {
-        println("Для создания новой заметки сначала введите ее название, а потом сам текст")
-        println("Введите 0 для выхода")
+        println("Для создания новой заметки сначала введите ее название")
+        println("0. Выход")
     }
 
     private fun readUserInput(onNavigate: (NavigationAction) -> Unit) {
-        var newNote: Note? = null
+        var noteName: String? = null
         while(true) {
             val input = readln().trim()
             when(input) {
@@ -38,14 +38,13 @@ class NoteCreateScreen() : Screen() {
                     break
                 }
                 else -> {
-                    if(newNote == null) {
-                        newNote = Note(input, null)
+                    if(noteName == null) {
+                        noteName = input
+                        println("Теперь введите текст заметки")
                     } else {
-                        newNote.text = input
-                        onNavigate(NavigationAction.SaveNoteAndBack(newNote))
+                        onNavigate(NavigationAction.SaveNoteAndBack(Note(noteName, input)))
                         break
                     }
-                    //TODO обработать негативные сценарии
                 }
             }
         }

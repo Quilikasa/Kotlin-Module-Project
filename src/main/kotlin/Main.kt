@@ -19,9 +19,9 @@ fun main(args: Array<String>) {
     notes.add(Note("Заметка 4", "Без второго мне веселей"))
 
     archives.add(Archive("Работа", notes))
-    archives.add(Archive("Дом", mutableListOf()))
-    archives.add(Archive("Спорт", mutableListOf()))
-    archives.add(Archive("Хобби", mutableListOf()))
+    archives.add(Archive("Дом"))
+    archives.add(Archive("Спорт"))
+    archives.add(Archive("Хобби"))
 
     //стартовый экран
     var currentScreen: Screen = ArchiveListScreen(archives)
