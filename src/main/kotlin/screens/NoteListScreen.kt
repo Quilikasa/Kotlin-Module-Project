@@ -2,7 +2,6 @@ package screens
 
 import NavigationAction
 import data.Note
-import java.util.Scanner
 
 /**
  * Экран списка заметок
@@ -10,7 +9,7 @@ import java.util.Scanner
  * Отображает название экрана
  * Принимает на вход список заметок
  * Отрисовывает список заметок и меню
- * Обрабатывает пользовательский ввод (для этого на вход так же принимает сканер)
+ * Обрабатывает пользовательский ввод
  *
  * Умеет обрабатывать 3 действия и выбрасывает колбэк с соответствующим NavigationAction:
  * 1) выбор заметки NavigationAction.OpenNote
@@ -18,7 +17,7 @@ import java.util.Scanner
  * 3) выход NavigationAction.Back
  *
  */
-class NoteListScreen(val scanner: Scanner, val notes: MutableList<Note>) : Screen() {
+class NoteListScreen(val notes: MutableList<Note>) : Screen() {
 
     override fun start(onNavigate: (NavigationAction) -> Unit) {
         showMenu()
@@ -40,7 +39,7 @@ class NoteListScreen(val scanner: Scanner, val notes: MutableList<Note>) : Scree
 
     private fun readUserInput(onNavigate: (NavigationAction) -> Unit) {
         while(true) {
-            val input = scanner.nextLine().trim()
+            val input = readln().trim()
             when(input) {
                 "0" -> {
                     onNavigate(NavigationAction.CreateNote)

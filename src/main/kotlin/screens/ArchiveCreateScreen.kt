@@ -2,7 +2,6 @@ package screens
 
 import NavigationAction
 import data.Archive
-import java.util.Scanner
 
 /**
  * Экран создания нового архива
@@ -10,14 +9,14 @@ import java.util.Scanner
  *
  * Отображает название экрана
  * Отрисовывает меню
- * Обрабатывает пользовательский ввод (для этого на вход так же принимает сканер)
+ * Обрабатывает пользовательский ввод
  *
  * Умеет обрабатывать 2 действия и выбрасывает колбэк с соответствующим NavigationAction:
  * 1) создание нового архива NavigationAction.SaveArchiveAndBack
  * 2) выход NavigationAction.Back
  *
  */
-class ArchiveCreateScreen(val scanner: Scanner): Screen() {
+class ArchiveCreateScreen(): Screen() {
 
     override fun start(onNavigate: (NavigationAction) -> Unit) {
         showMenu()
@@ -31,7 +30,7 @@ class ArchiveCreateScreen(val scanner: Scanner): Screen() {
 
     private fun readUserInput(onNavigate: (NavigationAction) -> Unit) {
         while(true) {
-            val input = scanner.nextLine().trim()
+            val input = readln().trim()
             when(input) {
                 "0" -> {
                     onNavigate(NavigationAction.Back)

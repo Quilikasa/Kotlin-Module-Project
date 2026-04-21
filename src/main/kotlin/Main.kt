@@ -6,13 +6,9 @@ import screens.NoteCreateScreen
 import screens.NoteListScreen
 import screens.NoteViewScreen
 import screens.Screen
-import java.util.Scanner
 import kotlin.system.exitProcess
 
 fun main(args: Array<String>) {
-    //инициализация сканера
-    val scanner = Scanner(System.`in`)
-
     //инициализация хранилища
     val archives: MutableList<Archive> = mutableListOf()
     //заполнение хранилища тестовыми данными
@@ -28,7 +24,7 @@ fun main(args: Array<String>) {
     archives.add(Archive("Хобби", mutableListOf()))
 
     //стартовый экран
-    var currentScreen: Screen = ArchiveListScreen(scanner, archives)
+    var currentScreen: Screen = ArchiveListScreen(archives)
     var currentArchive: Int = 0
 
     //логика навигации и запуска экранов
@@ -36,31 +32,30 @@ fun main(args: Array<String>) {
         currentScreen = when(action) {
             is NavigationAction.Back -> {
                 when(currentScreen) {
-                    is NoteListScreen -> ArchiveListScreen(scanner, archives)
-                    is NoteViewScreen -> NoteListScreen(scanner, archives[currentArchive].notes)
-                    is ArchiveCreateScreen -> ArchiveListScreen(scanner, archives)
-                    is NoteCreateScreen -> NoteListScreen(scanner, archives[currentArchive].notes)
-                    else -> ArchiveListScreen(scanner, archives)
+                    is NoteListScreen -> ArchiveListScreen(archives)
+                    is NoteViewScreen -> NoteListScreen(archives[currentArchive].notes)
+                    is ArchiveCreateScreen -> ArchiveListScreen(archives)
+                    is NoteCreateScreen -> NoteListScreen(archives[currentArchive].notes)
+                    else -> ArchiveListScreen(archives)
                 }
             }
             is NavigationAction.Exit -> {
-                scanner.close()
                 exitProcess(0)
             }
-            is NavigationAction.CreateArchive -> ArchiveCreateScreen(scanner)
+            is NavigationAction.CreateArchive -> ArchiveCreateScreen()
             is NavigationAction.OpenArchive -> {
                 currentArchive = action.archiveIndex
-                NoteListScreen(scanner, archives[currentArchive].notes)
+                NoteListScreen(archives[currentArchive].notes)
             }
-            is NavigationAction.CreateNote -> NoteCreateScreen(scanner)
-            is NavigationAction.OpenNote -> NoteViewScreen(scanner, action.note)
+            is NavigationAction.CreateNote -> NoteCreateScreen()
+            is NavigationAction.OpenNote -> NoteViewScreen(action.note)
             is NavigationAction.SaveArchiveAndBack -> {
                 archives.add(action.archive)
-                ArchiveListScreen(scanner, archives)
+                ArchiveListScreen(archives)
             }
             is NavigationAction.SaveNoteAndBack -> {
                 archives[currentArchive].notes.add(action.note)
-                NoteListScreen(scanner, archives[currentArchive].notes)
+                NoteListScreen(archives[currentArchive].notes)
             }
         }
 

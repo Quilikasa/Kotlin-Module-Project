@@ -2,7 +2,6 @@ package screens
 
 import NavigationAction
 import data.Archive
-import java.util.Scanner
 
 /**
  * Экран списка архивов - стартовый
@@ -10,7 +9,7 @@ import java.util.Scanner
  * Отображает название экрана
  * Принимает на вход список архивов
  * Отрисовывает список архивов и меню
- * Обрабатывает пользовательский ввод (для этого на вход так же принимает сканер)
+ * Обрабатывает пользовательский ввод
  *
  * Умеет обрабатывать 3 действия и выбрасывает колбэк с соответствующим NavigationAction:
  * 1) выбор архива NavigationAction.OpenArchive
@@ -18,7 +17,7 @@ import java.util.Scanner
  * 3) выход NavigationAction.Exit
  *
  */
-class ArchiveListScreen(val scanner: Scanner, val archives: MutableList<Archive>): Screen() {
+class ArchiveListScreen(val archives: MutableList<Archive>): Screen() {
 
     override fun start(onNavigate: (NavigationAction) -> Unit) {
         showMenu()
@@ -40,7 +39,7 @@ class ArchiveListScreen(val scanner: Scanner, val archives: MutableList<Archive>
 
     private fun readUserInput(onNavigate: (NavigationAction) -> Unit) {
         while(true) {
-            val input = scanner.nextLine().trim()
+            val input = readln().trim()
             when(input) {
                 "0" -> {
                     onNavigate(NavigationAction.CreateArchive)

@@ -1,9 +1,7 @@
 package screens
 
 import NavigationAction
-import data.Archive
 import data.Note
-import java.util.Scanner
 
 /**
  * Экран создания новой заметки
@@ -11,14 +9,14 @@ import java.util.Scanner
  *
  * Отображает название экрана
  * Отрисовывает меню
- * Обрабатывает пользовательский ввод (для этого на вход так же принимает сканер)
+ * Обрабатывает пользовательский ввод
  *
  * Умеет обрабатывать 2 действия и выбрасывает колбэк с соответствующим NavigationAction:
  * 1) создание новой заметки NavigationAction.SaveNoteAndBack
  * 2) выход NavigationAction.Back
  *
  */
-class NoteCreateScreen(val scanner: Scanner) : Screen() {
+class NoteCreateScreen() : Screen() {
 
     override fun start(onNavigate: (NavigationAction) -> Unit) {
         showMenu()
@@ -33,7 +31,7 @@ class NoteCreateScreen(val scanner: Scanner) : Screen() {
     private fun readUserInput(onNavigate: (NavigationAction) -> Unit) {
         var newNote: Note? = null
         while(true) {
-            val input = scanner.nextLine().trim()
+            val input = readln().trim()
             when(input) {
                 "0" -> {
                     onNavigate(NavigationAction.Back)
