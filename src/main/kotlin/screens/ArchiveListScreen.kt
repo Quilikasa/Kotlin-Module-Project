@@ -39,20 +39,29 @@ class ArchiveListScreen(val archives: MutableList<Archive>): Screen() {
 
     private fun readUserInput(onNavigate: (NavigationAction) -> Unit) {
         while(true) {
-            val input = readln().trim()
+            var input = -1
+            try {
+                input = readln().trim().toInt()
+            } catch (e: NumberFormatException) {
+                println("Следует вводить цифры")
+                continue
+            }
+
             when(input) {
-                "0" -> {
+                0 -> {
                     onNavigate(NavigationAction.CreateArchive)
                     break
                 }
-                "${archives.size+1}" -> {
+                in 1..archives.size -> {
+                    onNavigate(NavigationAction.OpenArchive(input-1))
+                    break
+                }
+                archives.size+1 -> {
                     onNavigate(NavigationAction.Exit)
                     break
                 }
                 else -> {
-                    onNavigate(NavigationAction.OpenArchive(input.toInt()-1))
-                    break
-                    //TODO обработать негативные сценарии
+                    println("Нет такого пункта меню")
                 }
             }
         }

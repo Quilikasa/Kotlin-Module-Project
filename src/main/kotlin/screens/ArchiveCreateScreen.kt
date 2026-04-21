@@ -5,7 +5,7 @@ import data.Archive
 
 /**
  * Экран создания нового архива
- * Новый архив создается пустой, без заметок
+ * Архив создается пустой, без заметок
  *
  * Отображает название экрана
  * Отрисовывает меню
@@ -25,7 +25,7 @@ class ArchiveCreateScreen(): Screen() {
 
     private fun showMenu() {
         println("Для создания нового архива введите его название")
-        println("Введите 0 для выхода")
+        println("0. Выход")
     }
 
     private fun readUserInput(onNavigate: (NavigationAction) -> Unit) {
@@ -40,7 +40,6 @@ class ArchiveCreateScreen(): Screen() {
                     val newArchive = Archive(input, mutableListOf())
                     onNavigate(NavigationAction.SaveArchiveAndBack(newArchive))
                     break
-                    //TODO обработать негативные сценарии
                 }
             }
         }

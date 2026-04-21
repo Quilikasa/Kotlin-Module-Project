@@ -39,20 +39,30 @@ class NoteListScreen(val notes: MutableList<Note>) : Screen() {
 
     private fun readUserInput(onNavigate: (NavigationAction) -> Unit) {
         while(true) {
-            val input = readln().trim()
+            var input = -1
+            try {
+                input = readln().trim().toInt()
+            } catch (e: NumberFormatException) {
+                println("Следует вводить цифры")
+                continue
+            }
+
             when(input) {
-                "0" -> {
+                0 -> {
                     onNavigate(NavigationAction.CreateNote)
                     break
                 }
-                "${notes.size+1}" -> {
+                in 1..notes.size -> {
+                    onNavigate(NavigationAction.OpenNote(notes[input-1]))
+                    break
+                }
+                notes.size+1 -> {
                     onNavigate(NavigationAction.Back)
                     break
                 }
                 else -> {
-                    onNavigate(NavigationAction.OpenNote(notes[input.toInt()-1]))
+                    println("Нет такого пункта меню")
                     break
-                    //TODO обработать негативные сценарии
                 }
             }
         }

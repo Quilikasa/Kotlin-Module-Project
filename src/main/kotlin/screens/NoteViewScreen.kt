@@ -6,7 +6,7 @@ import data.Note
 /**
  * Экран просмотра заметки
  *
- * Отображает название экрана
+ * Отображает название экрана и заметки
  * Принимает на вход заметку
  * Отрисовывает заметку и меню
  * Обрабатывает пользовательский ввод
@@ -25,14 +25,16 @@ class NoteViewScreen(val note: Note) : Screen() {
     private fun showMenu() {
         println("Заметка: ${note.name}")
         println(note.text)
-        println("Для выхода введите 0")
+        println("0. Выход")
     }
 
     private fun readUserInput(onNavigate: (NavigationAction) -> Unit) {
         while(true) {
             val input = readln().trim()
-            if(input.isNotEmpty()) {
+            if(input.equals("0")) {
                 onNavigate(NavigationAction.Back)
+            } else {
+                println("Для выхода с экрана введите 0")
             }
         }
     }
