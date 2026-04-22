@@ -3,5 +3,13 @@ package screens
 import NavigationAction
 
 abstract class Screen {
-    abstract fun start(onNavigate : (NavigationAction) -> Unit)
+
+    fun start(onNavigate : (NavigationAction) -> Unit) {
+        showMenu()
+        readUserInput(onNavigate)
+    }
+
+    abstract fun showMenu()
+
+    abstract fun readUserInput(onNavigate : (NavigationAction) -> Unit)
 }

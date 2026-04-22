@@ -17,18 +17,13 @@ import data.Note
  */
 class NoteViewScreen(val note: Note) : Screen() {
 
-    override fun start(onNavigate: (NavigationAction) -> Unit) {
-        showMenu()
-        readUserInput(onNavigate)
-    }
-
-    private fun showMenu() {
+    override fun showMenu() {
         println("Заметка: ${note.name}")
         println(note.text)
         println("0. Выход")
     }
 
-    private fun readUserInput(onNavigate: (NavigationAction) -> Unit) {
+    override fun readUserInput(onNavigate: (NavigationAction) -> Unit) {
         while(true) {
             val input = readln().trim()
             if(input.equals("0")) {

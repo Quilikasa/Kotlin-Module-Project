@@ -17,54 +17,21 @@ import data.Note
  * 3) выход NavigationAction.Back
  *
  */
-class NoteListScreen(val notes: MutableList<Note>) : Screen() {
+class NoteListScreen(val notes: MutableList<Note>) : ListScreen<Note>(notes) {
 
-    override fun start(onNavigate: (NavigationAction) -> Unit) {
-        showMenu()
-        readUserInput(onNavigate)
+    override val screenTitle = "Список заметок:"
+    override val actionCreate = NavigationAction.CreateNote
+    override val actionExit = NavigationAction.Back
+
+    override fun getActionForChoice(choice: Int): NavigationAction {
+        return NavigationAction.OpenNote(notes[choice-1])
     }
 
-    private fun showMenu() {
-        println("Список заметок:")
-        println("0. Создать заметку")
-        showNoteList()
-        println("${notes.size+1}. Выход")
-    }
-
-    private fun showNoteList() {
-        for (i in notes.indices) {
-            println("${i+1}. ${notes[i].name}")
-        }
-    }
-
-    private fun readUserInput(onNavigate: (NavigationAction) -> Unit) {
-        while(true) {
-            var input = -1
-            try {
-                input = readln().trim().toInt()
-            } catch (e: NumberFormatException) {
-                println("Следует вводить цифры")
-                continue
-            }
-
-            when(input) {
-                0 -> {
-                    onNavigate(NavigationAction.CreateNote)
-                    break
-                }
-                in 1..notes.size -> {
-                    onNavigate(NavigationAction.OpenNote(notes[input-1]))
-                    break
-                }
-                notes.size+1 -> {
-                    onNavigate(NavigationAction.Back)
-                    break
-                }
-                else -> {
-                    println("Нет такого пункта меню")
-                    break
-                }
-            }
-        }
+    override fun getMenuList(): List<String> {
+        val listMenu = mutableListOf<String>()
+        listMenu.add("Создать заметку")
+        notes.forEach { note -> listMenu.add(note.name) }
+        listMenu.add("Выход")
+        return listMenu
     }
 }

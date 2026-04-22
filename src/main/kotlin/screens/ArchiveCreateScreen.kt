@@ -18,17 +18,12 @@ import data.Archive
  */
 class ArchiveCreateScreen(): Screen() {
 
-    override fun start(onNavigate: (NavigationAction) -> Unit) {
-        showMenu()
-        readUserInput(onNavigate)
-    }
-
-    private fun showMenu() {
+    override fun showMenu() {
         println("Для создания нового архива введите его название")
         println("0. Выход")
     }
 
-    private fun readUserInput(onNavigate: (NavigationAction) -> Unit) {
+    override fun readUserInput(onNavigate: (NavigationAction) -> Unit) {
         while(true) {
             val input = readln().trim()
             when(input) {
@@ -37,9 +32,11 @@ class ArchiveCreateScreen(): Screen() {
                     break
                 }
                 else -> {
-                    val newArchive = Archive(input, mutableListOf())
-                    onNavigate(NavigationAction.SaveArchiveAndBack(newArchive))
-                    break
+                    if(input.isNotEmpty()) {
+                        val newArchive = Archive(input)
+                        onNavigate(NavigationAction.SaveArchiveAndBack(newArchive))
+                        break
+                    }
                 }
             }
         }

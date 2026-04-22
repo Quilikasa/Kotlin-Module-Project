@@ -17,53 +17,21 @@ import data.Archive
  * 3) выход NavigationAction.Exit
  *
  */
-class ArchiveListScreen(val archives: MutableList<Archive>): Screen() {
+class ArchiveListScreen(val archives: MutableList<Archive>): ListScreen<Archive>(archives) {
 
-    override fun start(onNavigate: (NavigationAction) -> Unit) {
-        showMenu()
-        readUserInput(onNavigate)
+    override val screenTitle = "Список архивов:"
+    override val actionCreate = NavigationAction.CreateArchive
+    override val actionExit = NavigationAction.Exit
+
+    override fun getActionForChoice(choice: Int): NavigationAction {
+        return NavigationAction.OpenArchive(choice-1)
     }
 
-    private fun showMenu() {
-        println("Список архивов:")
-        println("0. Создать архив")
-        showArchiveList()
-        println("${archives.size+1}. Выход")
-    }
-
-    private fun showArchiveList() {
-        for (i in archives.indices) {
-            println("${i+1}. ${archives[i].name}")
-        }
-    }
-
-    private fun readUserInput(onNavigate: (NavigationAction) -> Unit) {
-        while(true) {
-            var input = -1
-            try {
-                input = readln().trim().toInt()
-            } catch (e: NumberFormatException) {
-                println("Следует вводить цифры")
-                continue
-            }
-
-            when(input) {
-                0 -> {
-                    onNavigate(NavigationAction.CreateArchive)
-                    break
-                }
-                in 1..archives.size -> {
-                    onNavigate(NavigationAction.OpenArchive(input-1))
-                    break
-                }
-                archives.size+1 -> {
-                    onNavigate(NavigationAction.Exit)
-                    break
-                }
-                else -> {
-                    println("Нет такого пункта меню")
-                }
-            }
-        }
+    override fun getMenuList(): List<String> {
+        val listMenu = mutableListOf<String>()
+        listMenu.add("Создать архив")
+        archives.forEach { archive -> listMenu.add(archive.name) }
+        listMenu.add("Выход")
+        return listMenu
     }
 }

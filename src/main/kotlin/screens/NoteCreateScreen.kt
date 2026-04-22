@@ -18,17 +18,12 @@ import data.Note
  */
 class NoteCreateScreen() : Screen() {
 
-    override fun start(onNavigate: (NavigationAction) -> Unit) {
-        showMenu()
-        readUserInput(onNavigate)
-    }
-
-    private fun showMenu() {
+    override fun showMenu() {
         println("Для создания новой заметки сначала введите ее название")
         println("0. Выход")
     }
 
-    private fun readUserInput(onNavigate: (NavigationAction) -> Unit) {
+    override fun readUserInput(onNavigate: (NavigationAction) -> Unit) {
         var noteName: String? = null
         while(true) {
             val input = readln().trim()
