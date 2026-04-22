@@ -16,32 +16,19 @@ import data.Note
  * 2) выход NavigationAction.Back
  *
  */
-class NoteCreateScreen() : Screen() {
+class NoteCreateScreen() : CreateScreen() {
 
-    override fun showMenu() {
-        println("Для создания новой заметки сначала введите ее название")
-        println("0. Выход")
-    }
+    var noteName: String? = null
 
-    override fun readUserInput(onNavigate: (NavigationAction) -> Unit) {
-        var noteName: String? = null
-        while(true) {
-            val input = readln().trim()
-            when(input) {
-                "0" -> {
-                    onNavigate(NavigationAction.Back)
-                    break
-                }
-                else -> {
-                    if(noteName == null) {
-                        noteName = input
-                        println("Теперь введите текст заметки")
-                    } else {
-                        onNavigate(NavigationAction.SaveNoteAndBack(Note(noteName, input)))
-                        break
-                    }
-                }
-            }
+    override val screenTitle = "Для создания новой заметки сначала введите ее название"
+
+    override fun getActionForInput(input: String): NavigationAction? {
+        if(noteName == null) {
+            noteName = input
+            println("Теперь введите текст заметки")
+            return null
+        } else {
+            return NavigationAction.SaveNoteAndBack(Note(noteName ?: "Название", input))
         }
     }
 }

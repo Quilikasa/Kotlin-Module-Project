@@ -16,29 +16,12 @@ import data.Archive
  * 2) выход NavigationAction.Back
  *
  */
-class ArchiveCreateScreen(): Screen() {
+class ArchiveCreateScreen(): CreateScreen() {
 
-    override fun showMenu() {
-        println("Для создания нового архива введите его название")
-        println("0. Выход")
-    }
+    override val screenTitle = "Для создания нового архива введите его название"
 
-    override fun readUserInput(onNavigate: (NavigationAction) -> Unit) {
-        while(true) {
-            val input = readln().trim()
-            when(input) {
-                "0" -> {
-                    onNavigate(NavigationAction.Back)
-                    break
-                }
-                else -> {
-                    if(input.isNotEmpty()) {
-                        val newArchive = Archive(input)
-                        onNavigate(NavigationAction.SaveArchiveAndBack(newArchive))
-                        break
-                    }
-                }
-            }
-        }
+    override fun getActionForInput(input: String): NavigationAction? {
+        val newArchive = Archive(input)
+        return NavigationAction.SaveArchiveAndBack(newArchive)
     }
 }
