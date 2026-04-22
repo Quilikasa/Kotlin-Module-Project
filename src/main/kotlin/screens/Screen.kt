@@ -9,7 +9,7 @@ abstract class Screen {
         readUserInput(onNavigate)
     }
 
-    abstract fun showMenu()
+    protected abstract fun showMenu()
 
-    abstract fun readUserInput(onNavigate : (NavigationAction) -> Unit)
+    protected abstract fun readUserInput(onNavigate : (NavigationAction) -> Unit)
 }

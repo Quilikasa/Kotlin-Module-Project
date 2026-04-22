@@ -17,7 +17,7 @@ import data.Note
  * 3) выход NavigationAction.Back
  *
  */
-class NoteListScreen(val notes: MutableList<Note>) : ListScreen<Note>(notes) {
+class NoteListScreen(val notes: List<Note>) : ListScreen<Note>(notes) {
 
     override val screenTitle = "Список заметок:"
     override val actionCreate = NavigationAction.CreateNote

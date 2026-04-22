@@ -18,7 +18,7 @@ import data.Note
  */
 class NoteCreateScreen() : CreateScreen() {
 
-    var noteName: String? = null
+    private var noteName: String? = null
 
     override val screenTitle = "Для создания новой заметки сначала введите ее название"
 

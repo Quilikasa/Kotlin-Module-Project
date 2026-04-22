@@ -17,7 +17,7 @@ import data.Archive
  * 3) выход NavigationAction.Exit
  *
  */
-class ArchiveListScreen(val archives: MutableList<Archive>): ListScreen<Archive>(archives) {
+class ArchiveListScreen(val archives: List<Archive>): ListScreen<Archive>(archives) {
 
     override val screenTitle = "Список архивов:"
     override val actionCreate = NavigationAction.CreateArchive

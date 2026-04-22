@@ -2,15 +2,15 @@ package screens
 
 import NavigationAction
 
-abstract class ListScreen<T>(val list: MutableList<T>) : Screen() {
+abstract class ListScreen<T>(val list: List<T>) : Screen() {
 
-    abstract val screenTitle: String
-    abstract val actionCreate: NavigationAction
-    abstract val actionExit: NavigationAction
+    protected abstract val screenTitle: String
+    protected abstract val actionCreate: NavigationAction
+    protected abstract val actionExit: NavigationAction
 
-    abstract fun getActionForChoice(choice: Int): NavigationAction
+    protected abstract fun getActionForChoice(choice: Int): NavigationAction
 
-    abstract fun getMenuList(): List<String>
+    protected abstract fun getMenuList(): List<String>
 
     override fun showMenu() {
         println(screenTitle)
